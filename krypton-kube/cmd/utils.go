@@ -15,16 +15,22 @@ func GetK8sClient() (clientset *kubernetes.Clientset, err error){
 
 	} else if authType == "password" {
 		config = &rest.Config{
-			Host:	"",
+			Host:	clusterUrl,
 			APIPath:	"/",
-			Username:	"admin",
-			Password:	"admin",
+			Username:	userName,
+			Password:	passWord,
+			TLSClientConfig:	rest.TLSClientConfig{
+				Insecure:true,
+			},
 		}
 	} else if authType == "token" {
 		config = &rest.Config{
-			Host:	"",
+			Host:	clusterUrl,
 			APIPath:	"/",
-			BearerToken:	"",
+			BearerToken:	bearerToken,
+			TLSClientConfig:	rest.TLSClientConfig{
+				Insecure:true,
+			},
 		}
 	} else {
 		log.Fatal("invaild auth_type.")
